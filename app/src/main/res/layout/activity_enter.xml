@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EnterActivity"
+    android:background="@color/backg1"
+    >
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/linehor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"/>
+
+
+    <TextView
+        android:id="@+id/tvEnter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Вход"
+        android:textAlignment="center"
+        android:textColor="#403C31"
+        android:textSize="@dimen/_60ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.634"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <EditText
+        android:id="@+id/etPass"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/shape"
+        android:inputType="textPassword"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:singleLine="true"
+        android:textColor="@color/text1"
+        android:textSize="@dimen/_20ssp"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Почта:"
+        android:textColor="@color/text1"
+        android:textSize="@dimen/_22ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/etEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintWidth_percent="0.85" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/shape"
+        android:inputType="textEmailAddress"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:singleLine="true"
+        android:textColor="@color/text1"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvPass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <TextView
+        android:id="@+id/tvPass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Пароль:"
+        android:textColor="@color/text1"
+        android:textSize="@dimen/_22ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/etPass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <Button
+        android:id="@+id/btnEnter"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintBottom_toTopOf="@+id/linehor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Войти"
+
+        android:textStyle="bold"
+        android:textSize="@dimen/_25ssp"
+        android:backgroundTint="@color/btn1"
+        android:textColor="#403C31"
+        android:elevation="2dp"/>
+
+    <TextView
+        android:id="@+id/tvGoReg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Нет аккаунта? Зарегистрируйся бесплатно!"
+        android:textAlignment="center"
+        android:textColor="@color/textmini1"
+        android:textSize="@dimen/_18ssp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linehor"
+        app:layout_constraintWidth_percent="0.8" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
