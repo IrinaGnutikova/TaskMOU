@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TaskMOU" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/text1</item>
     </style>
 
     <style name="Theme.TaskMOU" parent="Base.Theme.TaskMOU" />
