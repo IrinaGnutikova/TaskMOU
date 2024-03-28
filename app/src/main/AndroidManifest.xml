@@ -19,13 +19,13 @@
             android:name=".RegistrActivity"
             android:exported="false" />
         <activity
-            android:name=".AddActivity"
+            android:name=".EnterActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".EnterActivity"
+            android:name=".AddActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9"/>
+        app:layout_constraintGuide_percent="0.75"/>
     <TextView
 
         android:id="@+id/twAdd"
@@ -37,22 +37,69 @@
 
 
     <EditText
-        android:padding="10dp"
         android:id="@+id/textTask"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape"
+        android:gravity="clip_horizontal"
         android:inputType="textMultiLine"
         android:maxLength="1000"
-        android:gravity="clip_horizontal"
-        android:background="@drawable/shape"
-        android:layout_margin="15dp"
+        android:padding="10dp"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintHeight_percent="0.75"
+
         app:layout_constraintBottom_toTopOf="@+id/linehor2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linehor" />
 
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linehor2"
+        >
+            <TextView
+                android:layout_width="@dimen/_100ssp"
+                android:layout_height="wrap_content"
+                android:text="Выполнить до:"
+                android:textColor="@color/text1"
+                android:textSize="20sp"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:paddingStart="20dp"
+                />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:gravity="center"
+    android:layout_marginTop="0dp"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textData"
+        android:background="@drawable/shape"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text1"
+        android:textSize="20sp"
+        android:text="Дата не выбрана"
+        android:padding="5dp"/>
+    <Button
+        android:id="@+id/btnData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выбрать дату"
+        android:textSize="25sp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/btn1"
+        android:textColor="@color/text1"
+        android:textStyle="bold"/>
+</LinearLayout>
+    </LinearLayout>
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
@@ -67,6 +114,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
