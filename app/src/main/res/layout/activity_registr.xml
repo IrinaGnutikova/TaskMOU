@@ -16,7 +16,7 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="Регистрация"
-        android:textColor="#403C31"
+        android:textColor="@color/bigText"
         android:textSize="50sp"
         android:textStyle="bold" />
 
@@ -103,7 +103,7 @@
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/btn1"
         android:text="Зарегистрироваться"
-        android:textColor="#403C31"
+        android:textColor="@color/black"
         android:textSize="@dimen/_18ssp"
 
         android:textStyle="bold" />

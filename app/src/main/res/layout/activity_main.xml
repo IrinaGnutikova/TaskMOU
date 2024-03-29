@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/textFIO"
-            android:textColor="@color/text1"
+            android:textColor="@color/bigText"
             android:text="Ваши заметки"
             android:textStyle="bold"
             android:layout_width="match_parent"
