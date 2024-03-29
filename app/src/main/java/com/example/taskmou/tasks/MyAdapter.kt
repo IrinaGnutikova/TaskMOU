@@ -1,5 +1,6 @@
 package com.example.taskmou.tasks
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Calendar
 
 class MyAdapter (private val taskList: ArrayList<Task>, private val uid: String): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
     private lateinit var auth: FirebaseAuth
@@ -31,6 +33,41 @@ class MyAdapter (private val taskList: ArrayList<Task>, private val uid: String)
 
         holder.task1.text = currentitem.taskName
         holder.date1.text = currentitem.date
+
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)+1
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        if(!currentitem.date.equals("Дата не установлена")){
+            val date2List = currentitem.date!!.split(".")
+            val current = "$day.$month.$year"
+
+            if(date2List[2].toInt() < year){
+
+                holder.date1.setTextColor(Color.parseColor("#FFF44336"))
+
+            }else {
+
+                holder.date1.setTextColor(Color.parseColor("#635D4C"))
+
+                if(date2List[1].toInt() < month){
+                holder.date1.setTextColor(Color.parseColor("#FFF44336"))
+                }else{
+
+                    holder.date1.setTextColor(Color.parseColor("#635D4C"))
+
+                    if (date2List[0].toInt() < day){
+                        holder.date1.setTextColor(Color.parseColor("#FFF44336"))
+                    }else {
+                        holder.date1.setTextColor(Color.parseColor("#635D4C"))
+                    }
+                }
+            }
+            if(currentitem.date == current){
+                holder.date1.setTextColor(Color.parseColor("#FFFF9800"))
+            }
+        }
 
         holder.btnDel1.setOnClickListener{
             deleteItem(currentitem.taskName.toString())
