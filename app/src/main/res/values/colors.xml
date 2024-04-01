@@ -8,4 +8,5 @@
     <color name="text1">#635D4C</color>
     <color name="dopcolor">#A07F55</color>
     <color name="bigText">#8B9455</color>
+    <color name="red">#FFF44336</color>
 </resources>

@@ -8,6 +8,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.taskmou.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
@@ -22,6 +23,9 @@ class RegistrActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registr)
+        if(!ErrDialog().checkForInternet(this)){
+            ErrDialog().showDialog(this)
+        }
         val agree = findViewById<TextView>(R.id.tvAgree)
         agree.setOnClickListener {
             val intent = Intent(this, AgreeActivity::class.java)
@@ -32,71 +36,83 @@ class RegistrActivity : AppCompatActivity() {
         val register = findViewById<Button>(R.id.btnRegister)
 
         register.setOnClickListener {
+            if (ErrDialog().checkForInternet(this)) {
 
-            val email = findViewById<EditText>(R.id.email)
-            val pass = findViewById<EditText>(R.id.password)
-            val name = findViewById<EditText>(R.id.name)
-            val agree = findViewById<CheckBox>(R.id.cbAgree)
+                val email = findViewById<EditText>(R.id.email)
+                val pass = findViewById<EditText>(R.id.password)
+                val name = findViewById<EditText>(R.id.name)
+                val agree = findViewById<CheckBox>(R.id.cbAgree)
 
-            val email1 = email.text.toString()
-            val password = pass.text.toString()
-            val name1 = name.text.toString()
+                val email1 = email.text.toString()
+                val password = pass.text.toString()
+                val name1 = name.text.toString()
 
-            if (email.text.isEmpty() || pass.text.isEmpty() || !agree.isChecked) {
-                Toast.makeText(baseContext, "Ошибка регистрации! Проверьте поля или примите соглашение", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            else{
-                auth.createUserWithEmailAndPassword(email1, password)
-                    .addOnCompleteListener(this) { task ->
+                if (email.text.isEmpty() || pass.text.isEmpty() || !agree.isChecked) {
+                    Toast.makeText(
+                        baseContext,
+                        "Ошибка регистрации! Проверьте поля или примите соглашение",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                } else {
+                    auth.createUserWithEmailAndPassword(email1, password)
+                        .addOnCompleteListener(this) { task ->
 
-                        if (task.isSuccessful) {
-                            Toast.makeText(
-                                baseContext, "Аккаунт успешно создан!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            auth = Firebase.auth
-                            val user = auth.currentUser
-                            val db = FirebaseFirestore.getInstance()
-                            if (user != null) {
-                                db.collection("users").document(user.uid)
-                                    .get()
-                                val userid = user.uid
-                                dbRef = FirebaseDatabase.getInstance().getReference("Tasks").child(userid).child("1").child("taskName")
-                                val hellotext1 ="Это заметки! Здесь ты можешь добавлять"
-                                val hellotext2 ="Или удалять записи, которые тебе не нужны!"
-                                dbRef.setValue(hellotext1).addOnCompleteListener {
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    baseContext, "Аккаунт успешно создан!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                auth = Firebase.auth
+                                val user = auth.currentUser
+                                val db = FirebaseFirestore.getInstance()
+                                if (user != null) {
+                                    db.collection("users").document(user.uid)
+                                        .get()
+                                    val userid = user.uid
+                                    dbRef = FirebaseDatabase.getInstance().getReference("Tasks")
+                                        .child(userid).child("1")
+                                    val hellotext1 = "Это заметки! Здесь ты можешь добавлять"
+                                    val fulltask1 = Task(hellotext1, "Дата не установлена")
+                                    val hellotext2 = "Или удалять записи, которые тебе не нужны!"
+                                    val fulltask2 = Task(hellotext2, "Дата не установлена")
+                                    dbRef.setValue(fulltask1).addOnCompleteListener {
+                                    }
+                                    dbRef = FirebaseDatabase.getInstance().getReference("Tasks")
+                                        .child(userid).child("2")
+                                    dbRef.setValue(fulltask2).addOnCompleteListener {
+                                    }
                                 }
-                                dbRef = FirebaseDatabase.getInstance().getReference("Tasks").child(userid).child("2").child("taskName")
-                                dbRef.setValue(hellotext2).addOnCompleteListener {
-                                }
+                                val profileUpdates = UserProfileChangeRequest.Builder()
+                                    .setDisplayName(name1)
+                                    .build()
+
+                                user?.updateProfile(profileUpdates)
+                                    ?.addOnCompleteListener { task ->
+                                    }
+
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(
+                                    baseContext, "Ошибка!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                            val profileUpdates = UserProfileChangeRequest.Builder()
-                                .setDisplayName(name1)
-                                .build()
 
-                            user?.updateProfile(profileUpdates)
-                                ?.addOnCompleteListener { task ->
-                                }
-
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(
-                                baseContext, "Ошибка!",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
-
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Ошибка: ${it.localizedMessage}", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                this,
+                                "Ошибка: ${it.localizedMessage}",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                }
+            } else {
+                ErrDialog().showDialog(this)
             }
-
-
         }
-
     }
 }

@@ -1,13 +1,20 @@
 package com.example.taskmou
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -18,6 +25,10 @@ class EnterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enter)
         val reg = findViewById<TextView>(R.id.tvGoReg)
+        if(!ErrDialog().checkForInternet(this)){
+            ErrDialog().showDialog(this)
+        }
+
         reg.setOnClickListener {
             val intent = Intent(this, RegistrActivity::class.java)
             startActivity(intent)
@@ -26,10 +37,10 @@ class EnterActivity : AppCompatActivity() {
         super.onStart()
         val currentUser = auth.currentUser
         if(currentUser != null){
-            Toast.makeText(baseContext, "С возвращением",
-                Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+                Toast.makeText(baseContext, "С возвращением",
+                    Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
         }
 
         val login = findViewById<Button>(R.id.btnEnter)
@@ -75,4 +86,5 @@ class EnterActivity : AppCompatActivity() {
     override fun onBackPressed() {
 
     }
+
 }

@@ -1,11 +1,17 @@
 package com.example.taskmou
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -32,7 +38,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        if(!ErrDialog().checkForInternet(this)){
+            ErrDialog().showDialog(this)
+        }
         auth = Firebase.auth
         val logout = findViewById<Button>(R.id.btnExit)
 
@@ -71,6 +79,8 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
 
@@ -84,10 +94,10 @@ class MainActivity : AppCompatActivity() {
 
             val uid = user.uid
             dbref = FirebaseDatabase.getInstance().getReference("Tasks").child(uid)
-            val db = FirebaseFirestore.getInstance()
 
             dbref.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+
                     taskArrayList.clear()
                     if (snapshot.exists()) {
 
@@ -106,14 +116,12 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
+
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(baseContext, error.message, Toast.LENGTH_SHORT).show()
                 }
             })
         }
-
-
-
 
     }
 

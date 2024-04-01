@@ -30,7 +30,9 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
-
+        if(!ErrDialog().checkForInternet(this)){
+            ErrDialog().showDialog(this)
+        }
         val pickDateButton = findViewById<Button>(R.id.btnData)
         val textview = findViewById<TextView>(R.id.textData)
 
@@ -39,7 +41,6 @@ class AddActivity : AppCompatActivity() {
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val current = "$month.$day.$year"
 
             val datePickerDialog = DatePickerDialog(this,
 
@@ -55,24 +56,26 @@ class AddActivity : AppCompatActivity() {
             val saveText = findViewById<Button>(R.id.btnSave)
 
             saveText.setOnClickListener {
-                val newtask = findViewById<EditText>(R.id.textTask)
-                val task = newtask.text.toString()
+                if(ErrDialog().checkForInternet(this)){
 
-                if(task.replace(" ", "") !=""){
-                    auth = Firebase.auth
-                    var user = auth.currentUser
-                    val db = FirebaseFirestore.getInstance()
-                    if (user != null) {
-                        db.collection("users").document(user.uid)
-                            .get()
-                        val userid = user.uid
-                        dbref = FirebaseDatabase.getInstance().getReference("Tasks").child(userid).push()
-                        val fulltask = Task(task, selectedDateString)
+                    val newtask = findViewById<EditText>(R.id.textTask)
+                    val task = newtask.text.toString()
 
-                        dbref.setValue(fulltask).addOnCompleteListener {
-                            if (it.isSuccessful){
+                    if(task.replace(" ", "") !=""){
+                        auth = Firebase.auth
+                        var user = auth.currentUser
+                        val db = FirebaseFirestore.getInstance()
+                        if (user != null) {
+                            db.collection("users").document(user.uid)
+                                .get()
+                            val userid = user.uid
+                            dbref = FirebaseDatabase.getInstance().getReference("Tasks").child(userid).push()
+                            val fulltask = Task(task, selectedDateString)
 
-                            }
+                            dbref.setValue(fulltask).addOnCompleteListener {
+                                if (it.isSuccessful){
+
+                                }
                                 Toast.makeText(baseContext, "Запись добавлена!", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
@@ -80,8 +83,11 @@ class AddActivity : AppCompatActivity() {
                             }
                         }
 
-                        }else{
-                    Toast.makeText(baseContext, "Запись не может быть пустой!", Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(baseContext, "Запись не может быть пустой!", Toast.LENGTH_LONG).show()
+                    }
+                }else{
+                    ErrDialog().showDialog(this)
                 }
 
             }
