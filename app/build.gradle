@@ -8,6 +8,11 @@ android {
     namespace 'com.example.taskmou'
     compileSdk 34
 
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
+
+
     defaultConfig {
         applicationId "com.example.taskmou"
         minSdk 24
@@ -40,6 +45,7 @@ android {
             classpath 'com.google.gms:google-services:4.4.1'
         }
     }
+
 }
 
 dependencies {
@@ -50,6 +56,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.11.0'
     testImplementation 'junit:junit:4.13.2'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
@@ -67,4 +74,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
     implementation 'com.google.firebase:firebase-auth-ktx:22.3.1'
 
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }

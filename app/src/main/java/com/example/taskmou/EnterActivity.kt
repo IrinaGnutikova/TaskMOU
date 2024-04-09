@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -36,9 +37,11 @@ class EnterActivity : AppCompatActivity() {
         auth = Firebase.auth
         super.onStart()
         val currentUser = auth.currentUser
+
         if(currentUser != null){
                 Toast.makeText(baseContext, "С возвращением",
                     Toast.LENGTH_SHORT).show()
+
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
         }
