@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "599597656114",
+    "firebase_url": "https://teachtask-4e78c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "teachtask-4e78c",
+    "storage_bucket": "teachtask-4e78c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599597656114:android:00cb1d34dd20198b12342b",
+        "android_client_info": {
+          "package_name": "com.example.taskmou"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoHBx7Bq_rSi1jurDLo3-rEBeQKEBB5r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599597656114:android:9fc753906e365ad412342b",
+        "android_client_info": {
+          "package_name": "com.example.teachtask"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoHBx7Bq_rSi1jurDLo3-rEBeQKEBB5r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
