@@ -30,7 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() { // главная страница просмотра задач
     private lateinit var auth: FirebaseAuth
     private lateinit var dbref: DatabaseReference
     private lateinit var taskRecyclerView: RecyclerView
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
 
     @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
+    override fun onBackPressed() { // запрет на возвращение на прошлую страницу
 
         Toast.makeText(baseContext, "Чтобы выйти из аккаунта нажмите на кнопку в вехнем углу", Toast.LENGTH_LONG).show()
     }

@@ -38,7 +38,7 @@ class EnterActivity : AppCompatActivity() {
         super.onStart()
         val currentUser = auth.currentUser
 
-        if(currentUser != null){
+        if(currentUser != null){ // проверка: был ли ранее авторизирован пользователь?
                 Toast.makeText(baseContext, "С возвращением",
                     Toast.LENGTH_SHORT).show()
 

@@ -9,7 +9,7 @@ import android.view.Window
 import android.widget.Button
 
 public class ErrDialog () {
-    public fun checkForInternet(context: Context): Boolean {
+    public fun checkForInternet(context: Context): Boolean {  // функция, отвечающая за проверку подключения к интернет
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             val network = connectivityManager.activeNetwork ?: return false
@@ -26,7 +26,7 @@ public class ErrDialog () {
             return networkInfo.isConnected
         }
     }
-    public fun showDialog(context: Context){
+    public fun showDialog(context: Context){ // отображение ошибки, если интернет отсутствует
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
