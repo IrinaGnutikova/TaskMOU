@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvBody"
+            android:textSize="@dimen/_10ssp"
             android:textColor="@color/bigText"
             android:text="Ошибка соединения с интернетом! Проверьте соединение и попробуйте еще раз."/>
 
@@ -40,6 +41,7 @@
             android:backgroundTint="@color/btn1"
             android:clickable="true"
             android:text="Подтвердить"
+            android:textSize="@dimen/_12ssp"
             android:layout_gravity="center"
             android:textColor="@color/black"/>
     </LinearLayout>

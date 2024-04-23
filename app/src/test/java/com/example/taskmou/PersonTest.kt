@@ -10,39 +10,39 @@ import org.junit.runners.JUnit4
 class PersonTest{
 
     @Test
-    fun testEnterTrue() {
+    fun testForTrueEnter() {
         val listPerson = listOf(
-            Person("Irina", "ira@mail.ru", "123456"),
-            Person("Vlad", "vlad@mail.ru", "111111"),
-            Person("Vasilisa", "vasa@mail.ru", "123456")
+            Person("Кирилл", "kirill1970@yandex.ru", "111111"),
+            Person("Сергей", "serrr@mail.ru", "654321"),
+            Person("Анастасия", "nastya@mail.ru", "135791")
         )
-        val email2 = "ira@mail.ru"
-        val pas2 = "123456"
+        val email2 = "serrr@mail.ru"
+        val pas2 = "654321"
 
         listPerson.forEach {person ->
-            if (person.email == email2 && person.pas == pas2) {
-                println("Пользователь ${person.name} вошел успешно")
+            if (person.email == email2 && person.pasword == pas2) {
+                println("${person.name} вошел(а) успешно")
             } else {
-                println("Пользователь ${person.name} не вошел")
+                println("${person.name} не вошел(а)")
             }
         }
     }
 
     @Test
-    fun testEnterFalse() {
+    fun testForFalseEnter() {
         val listPerson = listOf(
-            Person("Irina", "ira@mail.ru", "123456"),
-            Person("Vlad", "vlad@mail.ru", "111111"),
-            Person("Vasilisa", "vasa@mail.ru", "123456")
+            Person("Кирилл", "kirill1970@yandex.ru", "111111"),
+            Person("Сергей", "serrr@mail.ru", "654321"),
+            Person("Анастасия", "nastya@mail.ru", "135791")
         )
-        val email2 = "mihail@mail.ru"
-        val pas2 = "123666"
+        val email2 = "polina@mail.ru"
+        val pas2 = "88888888"
 
         listPerson.forEach {person ->
-            if (person.email == email2 && person.pas == pas2) {
-                println("Пользователь ${person.name} вошел успешно")
+            if (person.email == email2 && person.pasword == pas2) {
+                println("${person.name} вошел(а) успешно")
             } else {
-                println("Пользователь ${person.name} не вошел")
+                println("${person.name} не вошел(а)")
             }
         }
     }
