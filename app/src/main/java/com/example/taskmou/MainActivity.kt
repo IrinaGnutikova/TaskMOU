@@ -15,6 +15,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmou.tasks.MyAdapter
@@ -38,44 +39,50 @@ class MainActivity : AppCompatActivity() { // главная страница п
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if(!ErrDialog().checkForInternet(this)){
-            ErrDialog().showDialog(this)
-        }
-        auth = Firebase.auth
-        val logout = findViewById<Button>(R.id.btnExit)
+        val networkConnection = NetworkConnection(applicationContext)
+        networkConnection.observe(this, Observer { isConnected ->
 
-        logout.setOnClickListener {
+            if(isConnected){
+                auth = Firebase.auth
+                val logout = findViewById<Button>(R.id.btnExit)
 
-            auth.signOut()
-            Toast.makeText(
-                baseContext, "Вы вышли",
-                Toast.LENGTH_SHORT
-            ).show()
-            val intent = Intent(this, EnterActivity::class.java)
-            startActivity(intent)
+                logout.setOnClickListener {
 
-        }
+                    auth.signOut()
+                    Toast.makeText(
+                        baseContext, "Вы вышли",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val intent = Intent(this, EnterActivity::class.java)
+                    startActivity(intent)
 
-        val user = auth.currentUser
-        val name = user?.displayName
-        val userInfoTextView = findViewById<TextView>(R.id.textFIO)
-        if(name != null){
-            userInfoTextView.text = "Ваши заметки, $name!"
-        }
+                }
 
-        val addTask = findViewById<Button>(R.id.btnAdd)
-        addTask.setOnClickListener{
-            val intent = Intent(this, AddActivity::class.java)
-            startActivity(intent)
-        }
+                val user = auth.currentUser
+                val name = user?.displayName
+                val userInfoTextView = findViewById<TextView>(R.id.textFIO)
+                if(name != null){
+                    userInfoTextView.text = "Ваши заметки, $name!"
+                }
 
-        taskRecyclerView = findViewById(R.id.task_recyclerView)
-        taskRecyclerView.layoutManager = LinearLayoutManager(this)
-        taskRecyclerView.setHasFixedSize(true)
-        taskArrayList = arrayListOf<Task>()
+                val addTask = findViewById<Button>(R.id.btnAdd)
+                addTask.setOnClickListener{
+                    val intent = Intent(this, AddActivity::class.java)
+                    startActivity(intent)
+                }
 
-        taskArrayList.clear()
-        getTaskData()
+                taskRecyclerView = findViewById(R.id.task_recyclerView)
+                taskRecyclerView.layoutManager = LinearLayoutManager(this)
+                taskRecyclerView.setHasFixedSize(true)
+                taskArrayList = arrayListOf<Task>()
+
+                taskArrayList.clear()
+                getTaskData()
+            }else{
+                ErrDialog().showDialog(this)
+            }
+        })
+
 
 
     }

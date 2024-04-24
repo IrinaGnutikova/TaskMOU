@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.set
+import androidx.lifecycle.Observer
 import com.example.taskmou.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -30,66 +31,69 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
-        if(!ErrDialog().checkForInternet(this)){
-            ErrDialog().showDialog(this)
-        }
-        val pickDateButton = findViewById<Button>(R.id.btnData)
-        val textview = findViewById<TextView>(R.id.textData)
+        val networkConnection = NetworkConnection(applicationContext)
+        networkConnection.observe(this, Observer { isConnected ->
 
-        pickDateButton.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            if(isConnected){
+                val pickDateButton = findViewById<Button>(R.id.btnData)
+                val textview = findViewById<TextView>(R.id.textData)
 
-            val datePickerDialog = DatePickerDialog(this,
+                pickDateButton.setOnClickListener {
+                    val calendar = Calendar.getInstance()
+                    val year = calendar.get(Calendar.YEAR)
+                    val month = calendar.get(Calendar.MONTH)
+                    val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-                DatePickerDialog.OnDateSetListener { view: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                    selectedDateString = "$dayOfMonth.${month + 1}.$year"
+                    val datePickerDialog = DatePickerDialog(this,
 
-                    textview.setText(selectedDateString)
-                }, year, month, day
-            )
-            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            datePickerDialog.show()
-        }
-            val saveText = findViewById<Button>(R.id.btnSave)
+                        DatePickerDialog.OnDateSetListener { view: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                            selectedDateString = "$dayOfMonth.${month + 1}.$year"
 
-            saveText.setOnClickListener {
-                if(ErrDialog().checkForInternet(this)){
+                            textview.setText(selectedDateString)
+                        }, year, month, day
+                    )
+                    datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+                    datePickerDialog.show()
+                }
+                val saveText = findViewById<Button>(R.id.btnSave)
 
-                    val newtask = findViewById<EditText>(R.id.textTask)
-                    val task = newtask.text.toString()
+                saveText.setOnClickListener {
 
-                    if(task.replace(" ", "") !=""){
-                        auth = Firebase.auth
-                        var user = auth.currentUser
-                        val db = FirebaseFirestore.getInstance()
-                        if (user != null) {
-                            db.collection("users").document(user.uid)
-                                .get()
-                            val userid = user.uid
-                            dbref = FirebaseDatabase.getInstance().getReference("Tasks").child(userid).push()
-                            val fulltask = Task(task, selectedDateString)
+                        val newtask = findViewById<EditText>(R.id.textTask)
+                        val task = newtask.text.toString()
 
-                            dbref.setValue(fulltask).addOnCompleteListener {
-                                if (it.isSuccessful){
+                        if(task.replace(" ", "") !=""){
+                            auth = Firebase.auth
+                            var user = auth.currentUser
+                            val db = FirebaseFirestore.getInstance()
+                            if (user != null) {
+                                db.collection("users").document(user.uid)
+                                    .get()
+                                val userid = user.uid
+                                dbref = FirebaseDatabase.getInstance().getReference("Tasks").child(userid).push()
+                                val fulltask = Task(task, selectedDateString)
+
+                                dbref.setValue(fulltask).addOnCompleteListener {
+                                    if (it.isSuccessful){
+
+                                    }
+                                    Toast.makeText(baseContext, "Запись добавлена!", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
 
                                 }
-                                Toast.makeText(baseContext, "Запись добавлена!", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
-
                             }
+
+                        }else{
+                            Toast.makeText(baseContext, "Запись не может быть пустой!", Toast.LENGTH_LONG).show()
                         }
 
-                    }else{
-                        Toast.makeText(baseContext, "Запись не может быть пустой!", Toast.LENGTH_LONG).show()
-                    }
-                }else{
-                    ErrDialog().showDialog(this)
-                }
 
+                }
+            }else{
+                ErrDialog().showDialog(this)
             }
+        })
+
         }
     }
