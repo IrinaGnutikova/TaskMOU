@@ -17,38 +17,49 @@
 
 
     <LinearLayout
+
         android:id="@+id/linlay"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:weightSum="5"
+        app:layout_constraintBottom_toTopOf="@+id/card_view"
+        app:layout_constraintEnd_toStartOf="@+id/btnForum"
+        app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/card_view">
+        app:layout_constraintTop_toTopOf="parent">
+
         <Button
             android:id="@+id/btnExit"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
 
-            android:background="@drawable/logout_icon"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/logout_icon" />
 
         <TextView
             android:id="@+id/textFIO"
-            android:textColor="@color/bigText"
-            android:text="Ваши заметки"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ваши заметки"
+            android:textColor="@color/bigText"
             android:textSize="25sp"
-            />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btnForum"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/forum_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/card_view"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"

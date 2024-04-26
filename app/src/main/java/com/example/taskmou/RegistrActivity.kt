@@ -44,19 +44,28 @@ class RegistrActivity : AppCompatActivity() {
                         val pass = findViewById<EditText>(R.id.password)
                         val name = findViewById<EditText>(R.id.name)
                         val agree = findViewById<CheckBox>(R.id.cbAgree)
+                        val pass2 = findViewById<EditText>(R.id.passwordtwo)
 
                         val email1 = email.text.toString()
                         val password = pass.text.toString()
                         val name1 = name.text.toString()
 
-                        if (email.text.isEmpty() || pass.text.isEmpty() || !agree.isChecked) {
+                        if (email.text.isEmpty() || pass.text.isEmpty() || !agree.isChecked || pass2.text.isEmpty()) {
                             Toast.makeText(
                                 baseContext,
                                 "Ошибка регистрации! Проверьте поля или примите соглашение",
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@setOnClickListener
-                        } else {
+                        }else if(pass.text != pass2.text){
+                            Toast.makeText(
+                                baseContext,
+                                "Введенные пароли не совпадают!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@setOnClickListener
+                        }
+                        else {
                             auth.createUserWithEmailAndPassword(email1, password)
                                 .addOnCompleteListener(this) { task ->
 

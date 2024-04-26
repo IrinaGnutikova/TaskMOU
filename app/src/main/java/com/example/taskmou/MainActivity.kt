@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskforum.ActivityForum
 import com.example.taskmou.tasks.MyAdapter
 import com.example.taskmou.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -78,6 +79,12 @@ class MainActivity : AppCompatActivity() { // главная страница п
 
                 taskArrayList.clear()
                 getTaskData()
+
+                val btnForum = findViewById<Button>(R.id.btnForum)
+                btnForum.setOnClickListener {
+                    val intent = Intent(applicationContext, ActivityForum::class.java)
+                    startActivity(intent)
+                }
             }else{
                 ErrDialog().showDialog(this)
             }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/backg1">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTitle"
+            android:textColor="@color/text1"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:text="Ошибка соединения!"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvBody"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/bigText"
+            android:text="Ошибка соединения с интернетом! Проверьте соединение и попробуйте еще раз."/>
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:backgroundTint="@color/btn1"
+            android:clickable="true"
+            android:text="Подтвердить"
+            android:textSize="@dimen/_12ssp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+</FrameLayout>
