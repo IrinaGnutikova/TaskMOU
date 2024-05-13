@@ -49,7 +49,6 @@ class ActivityForum : AppCompatActivity() {
 
                 messArrayList.clear()
                 getTaskData()
-
                 val messText = findViewById<EditText>(R.id.etMess)
                 val btnSave = findViewById<Button>(R.id.btnSave)
                 btnSave.setOnClickListener {

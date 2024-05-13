@@ -1,32 +1,25 @@
 package com.example.taskmou
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 
 class EnterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    lateinit var sharedPreferences: SharedPreferences
+    val KEY_MODE ="nightMode"
+    var night = AppCompatDelegate.MODE_NIGHT_YES
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enter)
@@ -44,6 +37,10 @@ class EnterActivity : AppCompatActivity() {
                 auth = Firebase.auth
                 super.onStart()
                 val currentUser = auth.currentUser
+                
+                val sp =  getSharedPreferences("MySharedPref", MODE_PRIVATE)
+                var theme = sp.getInt(MainActivity().KEY_MODE,MainActivity().night)
+                AppCompatDelegate.setDefaultNightMode(theme)
 
                 if(currentUser != null){ // проверка: был ли ранее авторизирован пользователь?
                     Toast.makeText(baseContext, "С возвращением",

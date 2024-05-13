@@ -1,5 +1,6 @@
 package com.example.taskforum.mess
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -32,6 +33,7 @@ class AdapterMess (private val messList: ArrayList<Mess>, private val uid: Strin
         return messList.size
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem = messList[position]
 

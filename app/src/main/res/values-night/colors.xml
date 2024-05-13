@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="btn1">#A49B99</color>
+    <color name="backg1">#21232B</color>
+    <color name="text1">#635D4C</color>
+    <color name="dopcolor">#7E7675</color>
+    <color name="bigText">#8DA58B</color>
+    <color name="red">#A03E36</color>
+    <color name="shapes">#B3B3B3</color>
+</resources>

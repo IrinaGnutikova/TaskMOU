@@ -1,20 +1,16 @@
 package com.example.taskmou
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Window
 import android.widget.Button
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,8 +24,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() { // главная страница просмотра задач
@@ -37,6 +31,11 @@ class MainActivity : AppCompatActivity() { // главная страница п
     private lateinit var dbref: DatabaseReference
     private lateinit var taskRecyclerView: RecyclerView
     private lateinit var taskArrayList: ArrayList<Task>
+    lateinit var sharedPreferences: SharedPreferences
+    val KEY_MODE ="nightMode"
+    var light = AppCompatDelegate.MODE_NIGHT_NO
+    var night = AppCompatDelegate.MODE_NIGHT_YES
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,6 +57,32 @@ class MainActivity : AppCompatActivity() { // главная страница п
                     startActivity(intent)
 
                 }
+
+                sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+                var editor = sharedPreferences.edit()
+
+
+
+
+                val btnMode = findViewById<Button>(R.id.btnMode)
+
+
+btnMode.setOnClickListener {
+    val currMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+    if (currMode ==  Configuration.UI_MODE_NIGHT_YES) {
+
+        editor.putInt(KEY_MODE, light)
+        editor.apply()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+    } else{
+            editor.putInt(KEY_MODE, night)
+            editor.apply()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+        }
+    }
+
 
                 val user = auth.currentUser
                 val name = user?.displayName

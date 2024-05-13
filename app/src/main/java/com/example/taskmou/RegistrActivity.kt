@@ -57,7 +57,7 @@ class RegistrActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@setOnClickListener
-                        }else if(pass.text != pass2.text){
+                        }else if(pass.text.toString() != pass2.text.toString()){
                             Toast.makeText(
                                 baseContext,
                                 "Введенные пароли не совпадают!",

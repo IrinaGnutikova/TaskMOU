@@ -56,13 +56,13 @@ class MyAdapter (private val taskList: ArrayList<Task>, private val uid: String)
             val cmp = dateCurrent.compareTo(dateSelect)
             when{
                 cmp > 0 ->{
-                    holder.date1.setTextColor(Color.parseColor("#FFF44336")) //red
+                    holder.date1.setTextColor(Color.parseColor("#A03E36")) //red
                 }
                 cmp < 0 ->{
                     holder.date1.setTextColor(Color.parseColor("#635D4C"))
                 }
                 else -> {
-                    holder.date1.setTextColor(Color.parseColor("#FFFF9800"))
+                    holder.date1.setTextColor(Color.parseColor("#AC6701"))
                 }
             }
 
