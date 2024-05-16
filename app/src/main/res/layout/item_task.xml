@@ -60,10 +60,19 @@
                 android:textColor="@color/text1"
                 android:textSize="22sp"/>
             <TextView
+                android:id="@+id/timeTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:layout_marginEnd="6dp"
+                android:textColor="@color/text1"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+            <TextView
                 android:id="@+id/dateTask"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dd.mm.yyyy"
+                android:text=""
                 android:layout_marginEnd="6dp"
                 android:textColor="@color/text1"
                 android:textSize="22sp"

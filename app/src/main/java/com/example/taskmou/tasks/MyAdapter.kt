@@ -1,5 +1,6 @@
 package com.example.taskmou.tasks
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -39,27 +40,50 @@ class MyAdapter (private val taskList: ArrayList<Task>, private val uid: String)
         }else{
 
         holder.task1.text = currentitem.taskName
-        holder.date1.text = currentitem.date
+            holder.time.text = currentitem.date
 
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)+1
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val sdf = SimpleDateFormat("MM/dd/yyyy")
+        val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm:ss")
+            val sdf2 = SimpleDateFormat("MM/dd/yyyy")
         if(!currentitem.date.equals("Дата не установлена")){
-            val date2List = currentitem.date!!.split(".")
-            val sel = date2List[1]+"/"+date2List[0]+"/"+date2List[2]
-            val current = "$month/$day/$year"
-            val dateCurrent: Date = sdf.parse(current)
-            val dateSelect: Date = sdf.parse(sel)
+            val date2List = currentitem.date!!.split(".").toMutableList()
+            val sel = date2List[1]+"/"+date2List[0]+"/"+date2List[2]+" "+date2List[3]+":"+date2List[4]+":00"
+            val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+            val currentMin = calendar.get(Calendar.MINUTE)
+            val currentSec = calendar.get(Calendar.SECOND)
+            val current = "$month/$day/$year $currentHour:$currentMin:$currentSec"
+            val dateCurrent: Date = sdf.parse(current) as Date
+            val dateSelect: Date = sdf.parse(sel) as Date
+
+            val date2 = date2List[1]+"/"+date2List[0]+"/"+date2List[2]
+            val dateSel: Date = sdf2.parse(date2) as Date
+            val datecurr = "$month/$day/$year"
+            val dateCurr: Date = sdf2.parse(datecurr) as Date
+
+            for (i in date2List.indices){
+                 if (date2List[i].length == 1){
+                     date2List[i] = "0"+date2List[i]
+                 }
+            }
+            val dateText = date2List[0]+"."+date2List[1]+"."+date2List[2]
+            val timeText = date2List[3]+":"+date2List[4]
+            holder.date1.text = dateText.toString()
+            holder.time.text = timeText.toString()
 
             val cmp = dateCurrent.compareTo(dateSelect)
             when{
                 cmp > 0 ->{
                     holder.date1.setTextColor(Color.parseColor("#A03E36")) //red
+                    holder.time.setTextColor(Color.parseColor("#A03E36"))
                 }
                 cmp < 0 ->{
-                    holder.date1.setTextColor(Color.parseColor("#635D4C"))
+                    holder.time.setTextColor(Color.parseColor("#635D4C"))
+                    if (dateCurr.compareTo(dateSel) == 0){
+                        holder.date1.setTextColor(Color.parseColor("#AC6701"))
+                    }
                 }
                 else -> {
                     holder.date1.setTextColor(Color.parseColor("#AC6701"))
@@ -85,7 +109,7 @@ class MyAdapter (private val taskList: ArrayList<Task>, private val uid: String)
         val btnDel1 : Button = itemView.findViewById(R.id.btnDel)
         val date1 : TextView = itemView.findViewById(R.id.dateTask)
         val cont : Context = itemView.context
-
+        val time: TextView = itemView.findViewById(R.id.timeTask)
 
     }
 

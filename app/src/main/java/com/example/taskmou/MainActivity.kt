@@ -1,5 +1,6 @@
 package com.example.taskmou
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() { // главная страница п
     val KEY_MODE ="nightMode"
     var light = AppCompatDelegate.MODE_NIGHT_NO
     var night = AppCompatDelegate.MODE_NIGHT_YES
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    @SuppressLint("UseSwitchCompatOrMaterialCode", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,28 +62,43 @@ class MainActivity : AppCompatActivity() { // главная страница п
                 sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
                 var editor = sharedPreferences.edit()
 
-
-
-
                 val btnMode = findViewById<Button>(R.id.btnMode)
+                btnMode.clearAnimation()
+                val currMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                if (currMode ==  Configuration.UI_MODE_NIGHT_YES) {
+                    btnMode.setBackgroundResource(R.drawable.sun)
+                    val scaleAnim = ObjectAnimator.ofFloat(btnMode, "rotation", 0f, 360f)
+                    scaleAnim.duration = 3000
+                    scaleAnim.start()
+                    btnMode.postDelayed({
+                        btnMode.setBackgroundResource(R.drawable.sun)
 
+                    }, 3001)
+                } else{
+                    btnMode.setBackgroundResource(R.drawable.moon)
+                    val scaleAnim = ObjectAnimator.ofFloat(btnMode, "rotation", 0f, 360f)
+                    scaleAnim.duration = 3000
+                    scaleAnim.start()
+                    btnMode.postDelayed({
+                        btnMode.setBackgroundResource(R.drawable.moon)
+                    }, 3001)
+                }
 
 btnMode.setOnClickListener {
     val currMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
     if (currMode ==  Configuration.UI_MODE_NIGHT_YES) {
-
         editor.putInt(KEY_MODE, light)
         editor.apply()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
     } else{
+
             editor.putInt(KEY_MODE, night)
             editor.apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         }
     }
-
 
                 val user = auth.currentUser
                 val name = user?.displayName

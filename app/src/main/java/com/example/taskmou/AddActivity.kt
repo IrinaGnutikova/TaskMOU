@@ -2,6 +2,7 @@ package com.example.taskmou
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.taskmou.tasks.Task
@@ -18,6 +20,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.type.TimeOfDay
 import java.util.Calendar
 
 class AddActivity : AppCompatActivity() {
@@ -25,6 +28,7 @@ class AddActivity : AppCompatActivity() {
     private lateinit var dbref: DatabaseReference
     var selectedDateString = "Дата не установлена"
     var id = 1
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,29 +39,44 @@ class AddActivity : AppCompatActivity() {
             if(isConnected){
                 val pickDateButton = findViewById<Button>(R.id.btnData)
                 val textview = findViewById<TextView>(R.id.textData)
-
                 pickDateButton.setOnClickListener {
                     val calendar = Calendar.getInstance()
                     val year = calendar.get(Calendar.YEAR)
                     val month = calendar.get(Calendar.MONTH)
                     val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+
+                    val minute = 0
+                    val hour = 0
+
+                    var date = ""
+
+                    val timePickerDialog = TimePickerDialog(this,
+                        TimePickerDialog.OnTimeSetListener { view: TimePicker, hour: Int, min: Int ->
+                            selectedDateString = "$date.$hour.$min"
+                            textview.setText("$date $hour:$min")
+                        }
+                        , hour, minute, true)
+
                     val datePickerDialog = DatePickerDialog(this,
 
                         DatePickerDialog.OnDateSetListener { view: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                            selectedDateString = "$dayOfMonth.${month + 1}.$year"
+                            date = "$dayOfMonth.${month + 1}.$year"
+                            timePickerDialog.show()
 
-                            textview.setText(selectedDateString)
                         }, year, month, day
                     )
+
                     datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
                     datePickerDialog.show()
+
                 }
+
                 val saveText = findViewById<Button>(R.id.btnSave)
 
                 saveText.setOnClickListener {
 
-                        val newtask = findViewById<EditText>(R.id.textTask)
+                    val newtask = findViewById<EditText>(R.id.textTask)
                         val task = newtask.text.toString()
 
                         if(task.replace(" ", "") !=""){
@@ -94,4 +113,5 @@ class AddActivity : AppCompatActivity() {
         })
 
         }
+
     }
