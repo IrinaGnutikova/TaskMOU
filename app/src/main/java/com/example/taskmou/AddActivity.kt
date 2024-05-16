@@ -54,7 +54,15 @@ class AddActivity : AppCompatActivity() {
                     val timePickerDialog = TimePickerDialog(this,
                         TimePickerDialog.OnTimeSetListener { view: TimePicker, hour: Int, min: Int ->
                             selectedDateString = "$date.$hour.$min"
-                            textview.setText("$date $hour:$min")
+
+                            val dateList = selectedDateString.split(".").toMutableList()
+                            for (i in dateList.indices){
+                                if (dateList[i].length == 1){
+                                    dateList[i] = "0"+dateList[i]
+                                }
+                            }
+                            val dateTime = dateList[0]+"."+dateList[1]+"."+dateList[2] +" "+ dateList[3]+":"+dateList[4]
+                            textview.setText(dateTime)
                         }
                         , hour, minute, true)
 

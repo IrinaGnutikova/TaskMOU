@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92"/>
+        app:layout_constraintGuide_percent="0.90"/>
 
 
     <LinearLayout
@@ -105,7 +105,6 @@
         android:id="@+id/btnMode"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
         android:maxHeight="50dp"
         android:maxWidth="50dp"
         android:layout_marginEnd="5dp"

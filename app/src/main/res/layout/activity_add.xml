@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15"/>
+        app:layout_constraintGuide_begin="110dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/linehor2"
@@ -101,7 +101,7 @@
         android:textSize="25sp"
         android:layout_margin="10dp"
         android:backgroundTint="@color/btn1"
-        android:textColor="@color/black"
+        android:textColor="#403C31"
         android:textStyle="bold"/>
 
 </LinearLayout>
@@ -112,7 +112,7 @@
         android:layout_height="60dp"
         android:layout_below="@+id/textTask"
         android:backgroundTint="@color/btn1"
-        android:textColor="@color/black"
+        android:textColor="#403C31"
         android:textStyle="bold"
         android:text="Добавить заметку"
         android:textSize="25sp"

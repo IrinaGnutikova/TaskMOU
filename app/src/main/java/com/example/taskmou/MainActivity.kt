@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -66,25 +67,12 @@ class MainActivity : AppCompatActivity() { // главная страница п
                 btnMode.clearAnimation()
                 val currMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
                 if (currMode ==  Configuration.UI_MODE_NIGHT_YES) {
-                    btnMode.setBackgroundResource(R.drawable.sun)
-                    val scaleAnim = ObjectAnimator.ofFloat(btnMode, "rotation", 0f, 360f)
-                    scaleAnim.duration = 3000
-                    scaleAnim.start()
-                    btnMode.postDelayed({
-                        btnMode.setBackgroundResource(R.drawable.sun)
-
-                    }, 3001)
+                    animButton(R.drawable.sun)
                 } else{
-                    btnMode.setBackgroundResource(R.drawable.moon)
-                    val scaleAnim = ObjectAnimator.ofFloat(btnMode, "rotation", 0f, 360f)
-                    scaleAnim.duration = 3000
-                    scaleAnim.start()
-                    btnMode.postDelayed({
-                        btnMode.setBackgroundResource(R.drawable.moon)
-                    }, 3001)
+                    animButton(R.drawable.moon)
                 }
 
-btnMode.setOnClickListener {
+                btnMode.setOnClickListener {
     val currMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
     if (currMode ==  Configuration.UI_MODE_NIGHT_YES) {
         editor.putInt(KEY_MODE, light)
@@ -134,7 +122,17 @@ btnMode.setOnClickListener {
 
 
     }
-
+ private fun animButton(drawable: Int){
+     val btnMode = findViewById<Button>(R.id.btnMode)
+     btnMode.clearAnimation()
+     btnMode.setBackgroundResource(drawable)
+     val scaleAnim = ObjectAnimator.ofFloat(btnMode, "rotation", 0f, 360f)
+     scaleAnim.duration = 3000
+     scaleAnim.start()
+     btnMode.postDelayed({
+         btnMode.setBackgroundResource(drawable)
+     }, 3001)
+ }
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() { // запрет на возвращение на прошлую страницу

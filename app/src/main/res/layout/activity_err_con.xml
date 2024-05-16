@@ -43,7 +43,7 @@
             android:text="Подтвердить"
             android:textSize="@dimen/_12ssp"
             android:layout_gravity="center"
-            android:textColor="@color/black"/>
+            android:textColor="#403C31"/>
     </LinearLayout>
 
 </FrameLayout>

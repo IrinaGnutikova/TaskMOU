@@ -59,7 +59,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/btn1"
         android:text="Добавить заметку"
-        android:textColor="@color/black"
+        android:textColor="#403C31"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/line"
