@@ -34,9 +34,11 @@ class MainActivity : AppCompatActivity() { // главная страница п
     private lateinit var taskRecyclerView: RecyclerView
     private lateinit var taskArrayList: ArrayList<Task>
     lateinit var sharedPreferences: SharedPreferences
+
     val KEY_MODE ="nightMode"
     var light = AppCompatDelegate.MODE_NIGHT_NO
     var night = AppCompatDelegate.MODE_NIGHT_YES
+
     @SuppressLint("UseSwitchCompatOrMaterialCode", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

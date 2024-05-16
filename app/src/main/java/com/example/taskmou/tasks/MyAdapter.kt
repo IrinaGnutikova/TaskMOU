@@ -90,6 +90,9 @@ class MyAdapter (private val taskList: ArrayList<Task>, private val uid: String)
                 }
             }
 
+
+
+
         }
         }
         holder.btnDel1.setOnClickListener{
