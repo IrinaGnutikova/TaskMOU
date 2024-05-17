@@ -9,7 +9,6 @@ import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,19 +28,17 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import com.google.type.TimeOfDay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.UUID
 
 class AddActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var dbref: DatabaseReference
     var selectedDateString = "Дата не установлена"
-    var dateForNotif = ""
     var id = 1
     val calendar = Calendar.getInstance()
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +47,7 @@ class AddActivity : AppCompatActivity() {
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, Observer { isConnected ->
 
-            if(isConnected){
+            if (isConnected) {
                 val pickDateButton = findViewById<Button>(R.id.btnData)
                 val textview = findViewById<TextView>(R.id.textData)
                 pickDateButton.setOnClickListener {
@@ -70,7 +67,7 @@ class AddActivity : AppCompatActivity() {
                         TimePickerDialog.OnTimeSetListener { view: TimePicker, hour: Int, min: Int ->
                             val sdf = SimpleDateFormat("dd.MM.yyyy")
                             val sdfTime = SimpleDateFormat("hh.mm")
-                            val current = "$day.${month+1}.$year"
+                            val current = "$day.${month + 1}.$year"
                             val currentTime = "$currentHour.$currentMin"
                             val dateCurrent: Date = sdf.parse(current) as Date
                             val dateSelect: Date = sdf.parse(date) as Date
@@ -79,35 +76,43 @@ class AddActivity : AppCompatActivity() {
                             val cmpTime = timeCurrent.compareTo(timeSelect)
                             val cmp = dateCurrent.compareTo(dateSelect)
 
-                            if(cmp == 0){
-                                    if(cmpTime > 0){
-                                        selectedDateString = "Дата не установлена"
-                                        textview.setText(selectedDateString)
-                                        showAlert()
-                                        return@OnTimeSetListener
-                                    }
+                            if (cmp == 0) {
+                                if (cmpTime > 0) {
+                                    selectedDateString = "Дата не установлена"
+                                    textview.setText(selectedDateString)
+                                    showAlert()
+                                    return@OnTimeSetListener
+                                }
                             }
 
 
                             selectedDateString = "$date.$hour.$min"
 
                             val dateList = selectedDateString.split(".").toMutableList()
-                            for (i in dateList.indices){
-                                if (dateList[i].length == 1){
-                                    dateList[i] = "0"+dateList[i]
+                            for (i in dateList.indices) {
+                                if (dateList[i].length == 1) {
+                                    dateList[i] = "0" + dateList[i]
                                 }
                             }
-                            val dateTime = dateList[0]+"."+dateList[1]+"."+dateList[2] +" "+ dateList[3]+":"+dateList[4]
-                            calendar.set(dateList[2].toInt(),dateList[1].toInt()-1,  dateList[0].toInt(), dateList[3].toInt(), dateList[4].toInt())
+                            val dateTime =
+                                dateList[0] + "." + dateList[1] + "." + dateList[2] + " " + dateList[3] + ":" + dateList[4]
+                            calendar.set(
+                                dateList[2].toInt(),
+                                dateList[1].toInt() - 1,
+                                dateList[0].toInt(),
+                                dateList[3].toInt(),
+                                dateList[4].toInt()
+                            )
                             textview.setText(dateTime)
-                        }
-                        , hour, minute, true)
+                        }, hour, minute, true
+                    )
 
-                    val datePickerDialog = DatePickerDialog(this,
+                    val datePickerDialog = DatePickerDialog(
+                        this,
 
                         DatePickerDialog.OnDateSetListener { view: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
                             date = "$dayOfMonth.${month + 1}.$year"
-                            timePickerDialog.updateTime(currentHour,currentMin)
+                            timePickerDialog.updateTime(currentHour, currentMin)
                             timePickerDialog.show()
 
                         }, year, month, day
@@ -123,53 +128,59 @@ class AddActivity : AppCompatActivity() {
                 saveText.setOnClickListener {
 
                     val newtask = findViewById<EditText>(R.id.textTask)
-                        val task = newtask.text.toString()
+                    val task = newtask.text.toString()
 
-                    if(selectedDateString != "Дата не установлена"){
+                    if (selectedDateString != "Дата не установлена") {
                         scheduleNotification()
                     }
 
 
-                        if(task.replace(" ", "") !=""){
-                            auth = Firebase.auth
-                            var user = auth.currentUser
-                            val db = FirebaseFirestore.getInstance()
-                            if (user != null) {
-                                db.collection("users").document(user.uid)
-                                    .get()
-                                val userid = user.uid
-                                dbref = FirebaseDatabase.getInstance().getReference("Tasks").child(userid).push()
-                                val fulltask = Task(task, selectedDateString)
+                    if (task.replace(" ", "") != "") {
+                        auth = Firebase.auth
+                        var user = auth.currentUser
+                        val db = FirebaseFirestore.getInstance()
+                        if (user != null) {
+                            db.collection("users").document(user.uid)
+                                .get()
+                            val userid = user.uid
+                            dbref =
+                                FirebaseDatabase.getInstance().getReference("Tasks").child(userid)
+                                    .push()
+                            val fulltask = Task(task, selectedDateString)
 
-                                dbref.setValue(fulltask).addOnCompleteListener {
-                                    if (it.isSuccessful){
-
-                                    }
-                                    Toast.makeText(baseContext, "Запись добавлена!", Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
+                            dbref.setValue(fulltask).addOnCompleteListener {
+                                if (it.isSuccessful) {
 
                                 }
-                            }
+                                Toast.makeText(baseContext, "Запись добавлена!", Toast.LENGTH_SHORT)
+                                    .show()
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
 
-                        }else{
-                            Toast.makeText(baseContext, "Запись не может быть пустой!", Toast.LENGTH_LONG).show()
+                            }
                         }
 
-
+                    } else {
+                        Toast.makeText(
+                            baseContext,
+                            "Запись не может быть пустой!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
 
 
                 }
-            }else{
+            } else {
                 ErrDialog().showDialog(this)
             }
         })
 
-        }
-    private fun scheduleNotification(){
-val intent = Intent(applicationContext, Notification::class.java)
+    }
+
+    private fun scheduleNotification() {
+        val intent = Intent(applicationContext, Notification::class.java)
         val newtask = findViewById<EditText>(R.id.textTask)
-        val title = "Срок выполнения задачи окончен!"
+        val title = "Закончился срок выполнения задачи!"
         val message = "У задачи \"${newtask.text.toString()}\" вышел срок ее выполнения!"
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, message)
@@ -193,15 +204,15 @@ val intent = Intent(applicationContext, Notification::class.java)
         AlertDialog.Builder(this)
             .setTitle("Неверное время!")
             .setMessage(
-                        "Выбранное время не может быть меньше текущего! "
+                "Выбранное время не может быть меньше текущего! "
 
-            ).setPositiveButton("Okay"){ _, _ ->
+            ).setPositiveButton("Okay") { _, _ ->
 
             }.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChanell(){
+    private fun createNotificationChanell() {
         val name = "Уведомления"
         val desc = "Данные уведомления сообщают об окончании срока выполнения установленных задач"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -211,4 +222,4 @@ val intent = Intent(applicationContext, Notification::class.java)
         notificationManager.createNotificationChannel(channel)
     }
 
-    }
+}

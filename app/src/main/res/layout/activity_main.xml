@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:background="@color/backg1"
-    android:padding="15dp">
+    android:padding="15dp"
+    tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/linehor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90"/>
+        app:layout_constraintGuide_percent="0.90" />
 
 
     <LinearLayout
@@ -57,17 +57,18 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/forum_icon"
+        app:layout_constraintBottom_toTopOf="@+id/card_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/card_view"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        app:layout_constraintHeight_percent="0.82"
         android:background="@color/backg1"
         app:layout_constraintBottom_toTopOf="@+id/linehor"
+        app:layout_constraintHeight_percent="0.82"
         app:layout_constraintTop_toBottomOf="@+id/linlay">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -83,38 +84,40 @@
     <Button
         android:id="@+id/btnAdd"
 
-        android:layout_centerHorizontal="true"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:maxHeight="50dp"
-        android:maxWidth="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginEnd="5dp"
-        app:layout_constraintDimensionRatio="1:1"
         android:background="@drawable/plus_icon"
-        app:layout_constraintTop_toBottomOf="@+id/linehor"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linehor" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@+id/linehor"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
-    <Button
-        android:id="@+id/btnMode"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:maxHeight="50dp"
-        android:maxWidth="50dp"
-        android:layout_marginEnd="5dp"
-        android:backgroundTint="@color/dopcolor"
-        app:layout_constraintDimensionRatio="1:1"
-        android:background="@drawable/sun_and_moon_icon"
+        app:layout_constraintTop_toBottomOf="@+id/linehor">
 
- />
+        <Button
+            android:id="@+id/btnMode"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/sun_and_moon_icon"
+            android:backgroundTint="@color/dopcolor"
+            android:maxWidth="50dp"
+            android:maxHeight="50dp"
+            app:layout_constraintDimensionRatio="1:1"
 
-</LinearLayout>
+            />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,7 @@ import android.os.Build
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LiveData
 
-class NetworkConnection(private val context: Context): LiveData<Boolean>() {
+class NetworkConnection(private val context: Context) : LiveData<Boolean>() {
 
     private var connectivityManager: ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -29,9 +29,11 @@ class NetworkConnection(private val context: Context): LiveData<Boolean>() {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
                 connectivityManager.registerDefaultNetworkCallback(connectivityManagerCallback())
             }
+
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
                 lolipopNetworkRequest()
             }
+
             else -> {
                 context.registerReceiver(
                     networkReceiver,
@@ -47,7 +49,7 @@ class NetworkConnection(private val context: Context): LiveData<Boolean>() {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun lolipopNetworkRequest(){
+    private fun lolipopNetworkRequest() {
         val requestBuilder = NetworkRequest.Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
@@ -60,7 +62,7 @@ class NetworkConnection(private val context: Context): LiveData<Boolean>() {
 
 
     private fun connectivityManagerCallback(): ConnectivityManager.NetworkCallback {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             networkCallback = object : ConnectivityManager.NetworkCallback() {
 
@@ -75,18 +77,18 @@ class NetworkConnection(private val context: Context): LiveData<Boolean>() {
                 }
             }
             return networkCallback
-            }else{
-                throw IllegalAccessError("Ошибка")
-            }
+        } else {
+            throw IllegalAccessError("Ошибка")
         }
+    }
 
-    private val networkReceiver = object : BroadcastReceiver(){
+    private val networkReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             updateConnection()
         }
     }
 
-    private fun updateConnection(){
+    private fun updateConnection() {
         val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
         postValue(activeNetwork?.isConnected == true)
     }

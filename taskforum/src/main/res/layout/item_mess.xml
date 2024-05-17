@@ -2,13 +2,14 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/card_view"
     app:cardBackgroundColor="@color/shapes"
     app:cardCornerRadius="8dp"
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -33,11 +34,11 @@
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/ic_baseline_delete_24"
             android:layout_marginRight="5dp"
-            android:visibility="invisible"/>
+            android:background="@drawable/ic_baseline_delete_24"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/liner"
@@ -65,37 +66,40 @@
                 android:textColor="@color/text1"
                 android:textSize="20sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="6dp"
             android:layout_marginBottom="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/liner"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/liner">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Добавлено:"
                 android:layout_marginEnd="6dp"
+                android:text="Добавлено:"
                 android:textColor="@color/text1"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/timeAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00"
                 android:layout_marginEnd="6dp"
+                android:text="00:00"
                 android:textColor="@color/text1"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/dateAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dd.mm.yyyy"
                 android:layout_marginEnd="6dp"
+                android:text="dd.mm.yyyy"
                 android:textColor="@color/text1"
                 android:textSize="20sp" />
 

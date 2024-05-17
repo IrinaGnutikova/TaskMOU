@@ -125,13 +125,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/password"
-        android:orientation="horizontal"
         android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
 
         app:layout_constraintBottom_toTopOf="@+id/linehor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.85" >
+        app:layout_constraintWidth_percent="0.85">
 
         <CheckBox
             android:id="@+id/cbAgree"
@@ -157,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75"/>
+        app:layout_constraintGuide_percent="0.75" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -171,6 +171,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linehor"
-        app:layout_constraintWidth_percent="0.85"/>
+        app:layout_constraintWidth_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

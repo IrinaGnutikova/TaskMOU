@@ -1,13 +1,21 @@
 package com.example.taskforum
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +39,8 @@ class ActivityForum : AppCompatActivity() {
     private lateinit var dbref: DatabaseReference
     private lateinit var messRecyclerView: RecyclerView
     private lateinit var messArrayList: ArrayList<Mess>
+
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +49,8 @@ class ActivityForum : AppCompatActivity() {
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, Observer { isConnected ->
 
-            if(isConnected){
+            if (isConnected) {
                 auth = Firebase.auth
-
                 messRecyclerView = findViewById(R.id.task_recyclerView)
                 messRecyclerView.layoutManager = LinearLayoutManager(this)
                 messRecyclerView.setHasFixedSize(true)
@@ -54,7 +63,7 @@ class ActivityForum : AppCompatActivity() {
                 btnSave.setOnClickListener {
                     val task = messText.text.toString()
 
-                    if(task.replace(" ", "") !=""){
+                    if (task.replace(" ", "") != "") {
                         auth = Firebase.auth
                         var user = auth.currentUser
                         val db = FirebaseFirestore.getInstance()
@@ -64,7 +73,7 @@ class ActivityForum : AppCompatActivity() {
                             val useremail = user.email.toString()
                             val calendar = Calendar.getInstance()
                             val year = calendar.get(Calendar.YEAR)
-                            val month = calendar.get(Calendar.MONTH)+1
+                            val month = calendar.get(Calendar.MONTH) + 1
                             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
 
@@ -73,24 +82,29 @@ class ActivityForum : AppCompatActivity() {
                             val current = "$day.$month.$year.$hour.$min"
 
                             dbref = FirebaseDatabase.getInstance().getReference("Forum").push()
-                            val fulltask = Mess(task,useremail ,current )
+                            val fulltask = Mess(task, useremail, current)
 
                             dbref.setValue(fulltask).addOnCompleteListener {
-                                if (it.isSuccessful){
+                                if (it.isSuccessful) {
 
                                 }
-                                Toast.makeText(baseContext, "Запись добавлена!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(baseContext, "Запись добавлена!", Toast.LENGTH_SHORT)
+                                    .show()
                                 messText.text.clear()
                             }
                         }
 
-                    }else{
-                        Toast.makeText(baseContext, "Запись не может быть пустой!", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(
+                            baseContext,
+                            "Запись не может быть пустой!",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
 
 
                 }
-            }else{
+            } else {
                 ErrDialog().showDialog(this)
             }
         })
@@ -111,8 +125,7 @@ class ActivityForum : AppCompatActivity() {
                         }
                         messArrayList.reverse()
                         messRecyclerView.adapter = AdapterMess(messArrayList, uid)
-                    }
-                    else{
+                    } else {
                         messRecyclerView.adapter = AdapterMess(messArrayList, uid)
                     }
                 }
@@ -123,4 +136,5 @@ class ActivityForum : AppCompatActivity() {
             })
         }
     }
+
 }

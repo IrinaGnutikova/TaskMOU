@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() { // главная страница п
     private lateinit var taskArrayList: ArrayList<Task>
     lateinit var sharedPreferences: SharedPreferences
 
-    val KEY_MODE ="nightMode"
+    val KEY_MODE = "nightMode"
     var light = AppCompatDelegate.MODE_NIGHT_NO
     var night = AppCompatDelegate.MODE_NIGHT_YES
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() { // главная страница п
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, Observer { isConnected ->
 
-            if(isConnected){
+            if (isConnected) {
                 auth = Firebase.auth
                 val logout = findViewById<Button>(R.id.btnExit)
 
@@ -68,37 +68,38 @@ class MainActivity : AppCompatActivity() { // главная страница п
                 val btnMode = findViewById<Button>(R.id.btnMode)
                 btnMode.clearAnimation()
                 val currMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                if (currMode ==  Configuration.UI_MODE_NIGHT_YES) {
+                if (currMode == Configuration.UI_MODE_NIGHT_YES) {
                     animButton(R.drawable.sun)
-                } else{
+                } else {
                     animButton(R.drawable.moon)
                 }
 
                 btnMode.setOnClickListener {
-    val currMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-    if (currMode ==  Configuration.UI_MODE_NIGHT_YES) {
-        editor.putInt(KEY_MODE, light)
-        editor.apply()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    val currMode =
+                        resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                    if (currMode == Configuration.UI_MODE_NIGHT_YES) {
+                        editor.putInt(KEY_MODE, light)
+                        editor.apply()
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-    } else{
+                    } else {
 
-            editor.putInt(KEY_MODE, night)
-            editor.apply()
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        editor.putInt(KEY_MODE, night)
+                        editor.apply()
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-        }
-    }
+                    }
+                }
 
                 val user = auth.currentUser
                 val name = user?.displayName
                 val userInfoTextView = findViewById<TextView>(R.id.textFIO)
-                if(name != null){
+                if (name != null) {
                     userInfoTextView.text = "Ваши заметки, $name!"
                 }
 
                 val addTask = findViewById<Button>(R.id.btnAdd)
-                addTask.setOnClickListener{
+                addTask.setOnClickListener {
                     val intent = Intent(this, AddActivity::class.java)
                     startActivity(intent)
                 }
@@ -116,30 +117,34 @@ class MainActivity : AppCompatActivity() { // главная страница п
                     val intent = Intent(applicationContext, ActivityForum::class.java)
                     startActivity(intent)
                 }
-            }else{
+            } else {
                 ErrDialog().showDialog(this)
             }
         })
 
 
-
     }
- private fun animButton(drawable: Int){
-     val btnMode = findViewById<Button>(R.id.btnMode)
-     btnMode.clearAnimation()
-     btnMode.setBackgroundResource(drawable)
-     val scaleAnim = ObjectAnimator.ofFloat(btnMode, "rotation", 0f, 360f)
-     scaleAnim.duration = 3000
-     scaleAnim.start()
-     btnMode.postDelayed({
-         btnMode.setBackgroundResource(drawable)
-     }, 3001)
- }
+
+    private fun animButton(drawable: Int) {
+        val btnMode = findViewById<Button>(R.id.btnMode)
+        btnMode.clearAnimation()
+        btnMode.setBackgroundResource(drawable)
+        val scaleAnim = ObjectAnimator.ofFloat(btnMode, "rotation", 0f, 360f)
+        scaleAnim.duration = 3000
+        scaleAnim.start()
+        btnMode.postDelayed({
+            btnMode.setBackgroundResource(drawable)
+        }, 3001)
+    }
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() { // запрет на возвращение на прошлую страницу
 
-        Toast.makeText(baseContext, "Чтобы выйти из аккаунта нажмите на кнопку в вехнем углу", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            baseContext,
+            "Чтобы выйти из аккаунта нажмите на кнопку в вехнем углу",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun getTaskData() {
@@ -162,10 +167,9 @@ class MainActivity : AppCompatActivity() { // главная страница п
                             taskArrayList.add(task!!)
 
                         }
-
+                        taskArrayList.reverse()
                         taskRecyclerView.adapter = MyAdapter(taskArrayList, uid)
-                    }
-                    else{
+                    } else {
                         taskRecyclerView.adapter = MyAdapter(taskArrayList, uid)
                     }
 

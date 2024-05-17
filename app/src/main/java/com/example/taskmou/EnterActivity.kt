@@ -18,7 +18,7 @@ import com.google.firebase.ktx.Firebase
 class EnterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     lateinit var sharedPreferences: SharedPreferences
-    val KEY_MODE ="nightMode"
+    val KEY_MODE = "nightMode"
     var night = AppCompatDelegate.MODE_NIGHT_YES
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class EnterActivity : AppCompatActivity() {
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, Observer { isConnected ->
 
-            if(isConnected){
+            if (isConnected) {
                 reg.setOnClickListener {
                     val intent = Intent(this, RegistrActivity::class.java)
                     startActivity(intent)
@@ -37,14 +37,16 @@ class EnterActivity : AppCompatActivity() {
                 auth = Firebase.auth
                 super.onStart()
                 val currentUser = auth.currentUser
-                
-                val sp =  getSharedPreferences("MySharedPref", MODE_PRIVATE)
-                var theme = sp.getInt(MainActivity().KEY_MODE,MainActivity().night)
+
+                val sp = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+                var theme = sp.getInt(MainActivity().KEY_MODE, MainActivity().night)
                 AppCompatDelegate.setDefaultNightMode(theme)
 
-                if(currentUser != null){ // проверка: был ли ранее авторизирован пользователь?
-                    Toast.makeText(baseContext, "С возвращением",
-                        Toast.LENGTH_SHORT).show()
+                if (currentUser != null) { // проверка: был ли ранее авторизирован пользователь?
+                    Toast.makeText(
+                        baseContext, "С возвращением",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -58,8 +60,12 @@ class EnterActivity : AppCompatActivity() {
                     val email1 = email.text.toString()
                     val password = pass.text.toString()
 
-                    if (email.text.isEmpty() || pass.text.isEmpty()){
-                        Toast.makeText(baseContext, "Пожалуйста, заполните все поля!", Toast.LENGTH_SHORT).show()
+                    if (email.text.isEmpty() || pass.text.isEmpty()) {
+                        Toast.makeText(
+                            baseContext,
+                            "Пожалуйста, заполните все поля!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         return@setOnClickListener
                     }
 
@@ -68,34 +74,39 @@ class EnterActivity : AppCompatActivity() {
 
                             if (task.isSuccessful) {
 
-                                Toast.makeText(baseContext, "Вы вошли успешно!",
-                                    Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    baseContext, "Вы вошли успешно!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
 
-                            }
-                            else {
+                            } else {
 
-                                Toast.makeText(baseContext, "Ошибка входа. Попробуйте еще раз",
-                                    Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    baseContext, "Ошибка входа. Попробуйте еще раз",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
                             }
                         }
-                        .addOnFailureListener{
+                        .addOnFailureListener {
 
-                            Toast.makeText(baseContext, "Ошибка входа. ${it.localizedMessage}",
-                                Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                baseContext, "Ошибка входа. ${it.localizedMessage}",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
                         }
                 }
-            }else{
+            } else {
                 ErrDialog().showDialog(this)
             }
         })
 
 
-
     }
+
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
 
