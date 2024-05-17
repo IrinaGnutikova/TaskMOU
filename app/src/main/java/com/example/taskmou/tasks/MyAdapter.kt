@@ -2,6 +2,7 @@ package com.example.taskmou.tasks
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.menu.MenuView.ItemView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskmou.ChangeActivity
 import com.example.taskmou.ErrDialog
+import com.example.taskmou.MainActivity
 import com.example.taskmou.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -106,6 +111,12 @@ class MyAdapter(private val taskList: ArrayList<Task>, private val uid: String) 
                 showAlert(holder.cont, currentitem.taskName.toString(), currentitem.date.toString())
             }
         }
+        holder.btnCh1.setOnClickListener {
+            val intent = Intent(holder.cont, ChangeActivity::class.java)
+            intent.putExtra("task", currentitem.taskName.toString())
+            intent.putExtra("date", currentitem.date.toString())
+            holder.cont.startActivity(intent)
+        }
 
     }
 
@@ -116,6 +127,7 @@ class MyAdapter(private val taskList: ArrayList<Task>, private val uid: String) 
         val date1: TextView = itemView.findViewById(R.id.dateTask)
         val cont: Context = itemView.context
         val time: TextView = itemView.findViewById(R.id.timeTask)
+        val btnCh1: Button = itemView.findViewById(R.id.btnCh)
 
     }
 

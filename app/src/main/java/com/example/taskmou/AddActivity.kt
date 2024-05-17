@@ -123,6 +123,7 @@ class AddActivity : AppCompatActivity() {
 
                 }
                 createNotificationChanell()
+
                 val saveText = findViewById<Button>(R.id.btnSave)
 
                 saveText.setOnClickListener {
